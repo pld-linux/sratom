@@ -1,21 +1,21 @@
 Summary:	Library for serializing LV2 atoms to/from RDF
 Summary(pl.UTF-8):	Biblioteka do serializacji obiektów LV2 do/z RDF
 Name:		sratom
-Version:	0.6.0
+Version:	0.6.2
 Release:	1
 License:	ISC
 Group:		Libraries
 Source0:	http://download.drobilla.net/%{name}-%{version}.tar.bz2
-# Source0-md5:	76f085e6d41bba57f4dc2a5ffeff9dde
+# Source0-md5:	aa3c540032da43cf6cf68f684983d7f5
 URL:		http://drobilla.net/software/sratom/
 # urid+atom extensions
 BuildRequires:	lv2-devel >= 1.10.0
 BuildRequires:	python
-BuildRequires:	serd-devel >= 0.23.0
-BuildRequires:	sord-devel >= 0.12.0
+BuildRequires:	serd-devel >= 0.30.0
+BuildRequires:	sord-devel >= 0.14.0
 Requires:	lv2 >= 1.10.0
-Requires:	serd >= 0.23.0
-Requires:	sord >= 0.12.0
+Requires:	serd >= 0.30.0
+Requires:	sord >= 0.14.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -32,8 +32,8 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki sratom
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	lv2-devel >= 1.10.0
-Requires:	serd-devel >= 0.23.0
-Requires:	sord-devel >= 0.12.0
+Requires:	serd-devel >= 0.30.0
+Requires:	sord-devel >= 0.14.0
 
 %description devel
 Header files for sratom library.
