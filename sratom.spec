@@ -1,19 +1,19 @@
 Summary:	Library for serializing LV2 atoms to/from RDF
 Summary(pl.UTF-8):	Biblioteka do serializacji obiektów LV2 do/z RDF
 Name:		sratom
-Version:	0.6.2
+Version:	0.6.4
 Release:	1
 License:	ISC
 Group:		Libraries
 Source0:	http://download.drobilla.net/%{name}-%{version}.tar.bz2
-# Source0-md5:	aa3c540032da43cf6cf68f684983d7f5
+# Source0-md5:	0d087aa05c7b22d569aacc2fd14f0274
 URL:		http://drobilla.net/software/sratom/
 # urid+atom extensions
-BuildRequires:	lv2-devel >= 1.10.0
+BuildRequires:	lv2-devel >= 1.16.0
 BuildRequires:	python
 BuildRequires:	serd-devel >= 0.30.0
 BuildRequires:	sord-devel >= 0.14.0
-Requires:	lv2 >= 1.10.0
+Requires:	lv2 >= 1.16.0
 Requires:	serd >= 0.30.0
 Requires:	sord >= 0.14.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -31,7 +31,7 @@ Summary:	Header files for sratom library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki sratom
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	lv2-devel >= 1.10.0
+Requires:	lv2-devel >= 1.16.0
 Requires:	serd-devel >= 0.30.0
 Requires:	sord-devel >= 0.14.0
 
@@ -70,7 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING NEWS README
+%doc COPYING NEWS README.md
 %attr(755,root,root) %{_libdir}/libsratom-0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libsratom-0.so.0
 
