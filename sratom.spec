@@ -1,21 +1,34 @@
+#
+# Conditional build:
+%bcond_with	apidocs	# API documentation
+
 Summary:	Library for serializing LV2 atoms to/from RDF
 Summary(pl.UTF-8):	Biblioteka do serializacji obiektów LV2 do/z RDF
 Name:		sratom
-Version:	0.6.8
+Version:	0.6.12
 Release:	1
 License:	ISC
 Group:		Libraries
-Source0:	http://download.drobilla.net/%{name}-%{version}.tar.bz2
-# Source0-md5:	8e881d6fee3da9f1181f5f90795bb74a
+Source0:	http://download.drobilla.net/%{name}-%{version}.tar.xz
+# Source0-md5:	c3fe960ad49fd3ebac6b060063a204fa
 URL:		http://drobilla.net/software/sratom/
 # urid+atom extensions
-BuildRequires:	lv2-devel >= 1.16.0
-BuildRequires:	python
-BuildRequires:	serd-devel >= 0.30.0
-BuildRequires:	sord-devel >= 0.14.0
-Requires:	lv2 >= 1.16.0
-Requires:	serd >= 0.30.0
-Requires:	sord >= 0.14.0
+BuildRequires:	lv2-devel >= 1.18.3
+BuildRequires:	meson >= 0.56.0
+BuildRequires:	ninja >= 1.5
+BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	serd-devel >= 0.30.9
+BuildRequires:	sord-devel >= 0.16.9
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
+%if %{with apidocs}
+BuildRequires:	doxygen
+BuildRequires:	sphinx-pdg >= 2
+%endif
+Requires:	lv2 >= 1.18.3
+Requires:	serd >= 0.30.9
+Requires:	sord >= 0.16.9
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -31,9 +44,9 @@ Summary:	Header files for sratom library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki sratom
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	lv2-devel >= 1.16.0
-Requires:	serd-devel >= 0.30.0
-Requires:	sord-devel >= 0.14.0
+Requires:	lv2-devel >= 1.18.3
+Requires:	serd-devel >= 0.30.9
+Requires:	sord-devel >= 0.16.9
 
 %description devel
 Header files for sratom library.
@@ -45,22 +58,16 @@ Pliki nagłówkowe biblioteki sratom.
 %setup -q
 
 %build
-CC="%{__cc}" \
-CFLAGS="%{rpmcflags}" \
-./waf configure \
-	--prefix=%{_prefix} \
-	--libdir=%{_libdir}
+%meson build \
+	--default-library=shared \
+	%{!?with_apidocs:-Ddocs=disabled}
 
-./waf -v
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-./waf install \
-	--destdir=$RPM_BUILD_ROOT
-
-# let rpm autogenerate dependencies
-chmod 755 $RPM_BUILD_ROOT%{_libdir}/lib*.so*
+%ninja_install -C build
 
 %clean
 rm -rf $RPM_BUILD_ROOT
