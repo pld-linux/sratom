@@ -5,30 +5,31 @@
 Summary:	Library for serializing LV2 atoms to/from RDF
 Summary(pl.UTF-8):	Biblioteka do serializacji obiektów LV2 do/z RDF
 Name:		sratom
-Version:	0.6.14
+Version:	0.6.16
 Release:	1
 License:	ISC
 Group:		Libraries
 Source0:	http://download.drobilla.net/%{name}-%{version}.tar.xz
-# Source0-md5:	e229f08f841e5d8b5d967e63e0626fc4
+# Source0-md5:	6d02a279ff0f9d3871ed416b43b89cf8
 URL:		http://drobilla.net/software/sratom/
 # urid+atom extensions
-BuildRequires:	lv2-devel >= 1.18.3
+BuildRequires:	lv2-devel >= 1.18.4
 BuildRequires:	meson >= 0.56.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.736
-BuildRequires:	serd-devel >= 0.30.9
-BuildRequires:	sord-devel >= 0.16.9
+BuildRequires:	serd-devel >= 0.30.10
+BuildRequires:	sord-devel >= 0.16.16
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 %if %{with apidocs}
 BuildRequires:	doxygen
 BuildRequires:	sphinx-pdg >= 2
+BuildRequires:	sphinxygen
 %endif
-Requires:	lv2 >= 1.18.3
-Requires:	serd >= 0.30.9
-Requires:	sord >= 0.16.9
+Requires:	lv2 >= 1.18.4
+Requires:	serd >= 0.30.10
+Requires:	sord >= 0.16.16
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -44,9 +45,9 @@ Summary:	Header files for sratom library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki sratom
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	lv2-devel >= 1.18.3
-Requires:	serd-devel >= 0.30.9
-Requires:	sord-devel >= 0.16.9
+Requires:	lv2-devel >= 1.18.4
+Requires:	serd-devel >= 0.30.10
+Requires:	sord-devel >= 0.16.16
 
 %description devel
 Header files for sratom library.
