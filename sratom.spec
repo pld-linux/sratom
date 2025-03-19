@@ -1,29 +1,32 @@
 #
 # Conditional build:
-%bcond_with	apidocs	# API documentation
+%bcond_without	apidocs	# API documentation
 
 Summary:	Library for serializing LV2 atoms to/from RDF
 Summary(pl.UTF-8):	Biblioteka do serializacji obiektów LV2 do/z RDF
 Name:		sratom
-Version:	0.6.16
+Version:	0.6.18
 Release:	1
 License:	ISC
 Group:		Libraries
 Source0:	http://download.drobilla.net/%{name}-%{version}.tar.xz
-# Source0-md5:	6d02a279ff0f9d3871ed416b43b89cf8
+# Source0-md5:	7f0411550c69ab009365517186f4b103
 URL:		http://drobilla.net/software/sratom/
 # urid+atom extensions
 BuildRequires:	lv2-devel >= 1.18.4
 BuildRequires:	meson >= 0.56.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpm-build >= 4.6
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	serd-devel >= 0.30.10
 BuildRequires:	sord-devel >= 0.16.16
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 %if %{with apidocs}
 BuildRequires:	doxygen
+BuildRequires:	python3 >= 1:3.6
+BuildRequires:	python3-sphinx_lv2_theme
 BuildRequires:	sphinx-pdg >= 2
 BuildRequires:	sphinxygen
 %endif
@@ -55,20 +58,33 @@ Header files for sratom library.
 %description devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki sratom.
 
+%package apidocs
+Summary:	API documentation for sratom library
+Summary(pl.UTF-8):	Dokumentacja API biblioteki sratom
+Group:		Documentation
+BuildArch:	noarch
+
+%description apidocs
+API documentation for sratom library.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API biblioteki sratom.
+
 %prep
 %setup -q
 
 %build
-%meson build \
+%meson \
 	--default-library=shared \
-	%{!?with_apidocs:-Ddocs=disabled}
+	%{!?with_apidocs:-Ddocs=disabled} \
+	-Dsinglehtml=disabled
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -87,3 +103,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libsratom-0.so
 %{_includedir}/sratom-0
 %{_pkgconfigdir}/sratom-0.pc
+
+%if %{with apidocs}
+%files apidocs
+%defattr(644,root,root,755)
+%dir %{_docdir}/sratom-0
+%{_docdir}/sratom-0/html
+%endif
